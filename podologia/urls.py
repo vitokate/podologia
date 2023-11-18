@@ -1,6 +1,6 @@
 from django.contrib import admin
 from django.urls import path
-from miapp.views import CitaListView, agendar_cita  # Asegúrate de cambiar 'miapp' por el nombre real de tu aplicación
+from podo.views import CitaListView, agendar_cita
 
 urlpatterns = [
     path('admin/', admin.site.urls),
