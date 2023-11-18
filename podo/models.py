@@ -14,8 +14,8 @@ class Cita(models.Model):
     fecha_nacimiento = models.DateField()
     correo = models.EmailField(blank=True, null=True)
     podologo = models.CharField(max_length=50, choices=PODOLOGOS_CHOICES)
-    fecha_cita = models.DateField()
-    hora_cita = models.TimeField()
+    fecha_cita = models.DateField(null=True)  # Permitir valores nulos
+    hora_cita = models.TimeField(null=True)   # Permitir valores nulos
 
     def __str__(self):
         return f"{self.nombre_paciente} {self.apellidos_paciente} - {self.fecha_cita} {self.hora_cita}"
