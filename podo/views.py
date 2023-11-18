@@ -1,26 +1,30 @@
 from django.shortcuts import render, redirect
 from .models import Cita
-from .forms import CitaForm  # Importa CitaForm desde aquí
-from django.views.generic import ListView
-from django.urls import reverse_lazy
-
-class CitaListView(ListView):
-    model = Cita
-    template_name = 'podo/lista_citas.html'
-
-    def get_queryset(self):
-        # Aquí puedes modificar el queryset para filtrar por día, mes, año
-        # Por ahora, simplemente devuelve todas las citas
-        return Cita.objects.all()
+from .forms import CitaForm
+from django.contrib import messages
+from django.utils import timezone
+import pytz
 
 def agendar_cita(request):
     if request.method == 'POST':
         form = CitaForm(request.POST)
         if form.is_valid():
-            form.save()
-            return redirect('lista_citas')
+            cita = form.save(commit=False)
+            # Ajustar a la zona horaria de Chile
+            hora_chilena = pytz.timezone('Chile/Continental')
+            cita.fecha_cita = cita.fecha_cita.astimezone(hora_chilena)
+            cita.hora_cita = cita.hora_cita.astimezone(hora_chilena)
+
+            # Verificar si ya existe una cita para ese podólogo en la fecha y hora especificadas
+            if not Cita.objects.filter(podologo=cita.podologo, fecha_cita=cita.fecha_cita, hora_cita=cita.hora_cita).exists():
+                cita.save()
+                messages.success(request, 'Cita agendada con éxito.')
+                return redirect('alguna_url')
+            else:
+                messages.error(request, 'El podólogo seleccionado ya tiene una cita en ese horario.')
     else:
         form = CitaForm()
 
-    return render(request, 'podo/agendar_cita.html', {'form': form})
+    return render(request, 'agendar_cita.html', {'form': form})
+
 
