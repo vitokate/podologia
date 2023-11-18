@@ -1,6 +1,6 @@
-from django.shortcuts import render, redirect  # Agregado redirect aquí
+from django.shortcuts import render, redirect
 from .models import Cita
-from .forms import CitaForm
+from .forms import CitaForm  # Importa CitaForm desde aquí
 from django.views.generic import ListView
 from django.urls import reverse_lazy
 
@@ -23,3 +23,4 @@ def agendar_cita(request):
         form = CitaForm()
 
     return render(request, 'podo/agendar_cita.html', {'form': form})
+
