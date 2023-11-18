@@ -3,12 +3,22 @@ from django.views.generic import ListView
 from .models import Cita
 from .forms import CitaForm
 from django.contrib import messages
-from django.utils import timezone
 import pytz
+from datetime import datetime
 
 class CitaListView(ListView):
     model = Cita
     template_name = 'lista_citas.html'
+
+    def get_queryset(self):
+        fecha = self.request.GET.get('fecha')
+        if fecha:
+            try:
+                fecha = datetime.strptime(fecha, '%Y-%m-%d').date()
+                return Cita.objects.filter(fecha_cita=fecha)
+            except ValueError:
+                pass
+        return Cita.objects.all()
 
 def agendar_cita(request):
     if request.method == 'POST':
@@ -31,5 +41,3 @@ def agendar_cita(request):
         form = CitaForm()
 
     return render(request, 'agendar_cita.html', {'form': form})
-
-

@@ -1,6 +1,47 @@
-<h2>Lista de Citas</h2>
-<ul>
-    {% for cita in object_list %}
-    <li>{{ cita.fecha_hora }} - {{ cita.cliente }} con {{ cita.podologo }}</li>
-    {% endfor %}
-</ul>
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Lista de Citas</title>
+</head>
+<body>
+    <h1>Lista de Citas</h1>
+
+    <!-- Formulario para seleccionar la fecha -->
+    <form method="get" action="">
+        <label for="fecha">Seleccione una fecha:</label>
+        <input type="date" id="fecha" name="fecha" value="{{ request.GET.fecha }}">
+        <input type="submit" value="Buscar">
+    </form>
+
+    <!-- Tabla para mostrar las citas -->
+    <table>
+        <thead>
+            <tr>
+                <th>Fecha</th>
+                <th>Hora</th>
+                <th>Podólogo</th>
+                <th>Paciente</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for cita in object_list %}
+                <tr>
+                    <td>{{ cita.fecha_cita|date:"d/m/Y" }}</td>
+                    <td>{{ cita.hora_cita|date:"H:i" }}</td>
+                    <td>{{ cita.podologo }}</td>
+                    <td>{{ cita.paciente }}</td>
+                    <td>
+                        <!-- Aquí puede agregar botones o enlaces para acciones como editar o eliminar -->
+                    </td>
+                </tr>
+            {% empty %}
+                <tr>
+                    <td colspan="5">No hay citas para esta fecha.</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
