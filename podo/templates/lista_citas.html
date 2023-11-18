@@ -1,0 +1,6 @@
+<h2>Lista de Citas</h2>
+<ul>
+    {% for cita in object_list %}
+    <li>{{ cita.fecha_hora }} - {{ cita.cliente }} con {{ cita.podologo }}</li>
+    {% endfor %}
+</ul>
