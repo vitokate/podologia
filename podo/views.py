@@ -1,9 +1,14 @@
 from django.shortcuts import render, redirect
+from django.views.generic import ListView
 from .models import Cita
 from .forms import CitaForm
 from django.contrib import messages
 from django.utils import timezone
 import pytz
+
+class CitaListView(ListView):
+    model = Cita
+    template_name = 'lista_citas.html'
 
 def agendar_cita(request):
     if request.method == 'POST':
