@@ -1,16 +1,19 @@
 from django.db import models
 
-class Podologo(models.Model):
-    nombre = models.CharField(max_length=100)
-    # Otros campos relevantes
-
-    def __str__(self):
-        return self.nombre
-
 class Cita(models.Model):
-    fecha_hora = models.DateTimeField()
-    podologo = models.ForeignKey(Podologo, on_delete=models.CASCADE)
-    cliente = models.CharField(max_length=100)  # O referencia a un modelo Cliente
+    nombre_paciente = models.CharField(max_length=100)
+    apellidos_paciente = models.CharField(max_length=100)
+    fecha_nacimiento = models.DateField()
+    correo = models.EmailField(blank=True, null=True)  # Opcional
+    podologo = models.CharField(max_length=50, choices=PODOLOGOS_CHOICES)
 
-    def __str__(self):
-        return f"{self.fecha_hora} - {self.podologo}"
+    PODOLOGOS_CHOICES = [
+        ('Podologo 1', 'Podólogo 1'),
+        ('Podologo 2', 'Podólogo 2'),
+        ('Podologo 3', 'Podólogo 3'),
+        ('Podologo 4', 'Podólogo 4'),
+        ('Podologo 5', 'Podólogo 5'),
+    ]
+
+    # Otros campos necesarios...
+
