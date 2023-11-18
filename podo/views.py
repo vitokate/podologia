@@ -6,7 +6,7 @@ from django.urls import reverse_lazy
 
 class CitaListView(ListView):
     model = Cita
-    template_name = 'citas/lista_citas.html'
+    template_name = 'podo/lista_citas.html'
 
     def get_queryset(self):
         # Aquí puedes modificar el queryset para filtrar por día, mes, año
@@ -22,4 +22,4 @@ def agendar_cita(request):
     else:
         form = CitaForm()
 
-    return render(request, 'citas/agendar_cita.html', {'form': form})
+    return render(request, 'podo/agendar_cita.html', {'form': form})
