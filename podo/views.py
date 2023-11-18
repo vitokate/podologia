@@ -1,4 +1,4 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect  # Agregado redirect aquí
 from .models import Cita
 from .forms import CitaForm
 from django.views.generic import ListView
@@ -10,6 +10,8 @@ class CitaListView(ListView):
 
     def get_queryset(self):
         # Aquí puedes modificar el queryset para filtrar por día, mes, año
+        # Por ahora, simplemente devuelve todas las citas
+        return Cita.objects.all()
 
 def agendar_cita(request):
     if request.method == 'POST':
@@ -19,4 +21,5 @@ def agendar_cita(request):
             return redirect('lista_citas')
     else:
         form = CitaForm()
+
     return render(request, 'citas/agendar_cita.html', {'form': form})
