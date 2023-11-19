@@ -9,11 +9,11 @@ class Cita(models.Model):
         ('Podologo 5', 'Podólogo 5'),
     ]
 
-    nombre_paciente = models.CharField(max_length=100)
-    apellidos_paciente = models.CharField(max_length=100)
-    fecha_nacimiento = models.DateField()
+    nombre_paciente = models.CharField(max_length=100, null=True)
+    apellidos_paciente = models.CharField(max_length=100, null=True)
+    fecha_nacimiento = models.DateField(null=True)
     correo = models.EmailField(blank=True, null=True)
-    podologo = models.CharField(max_length=50, choices=PODOLOGOS_CHOICES)
+    podologo = models.CharField(max_length=50, choices=PODOLOGOS_CHOICES,null=True)
     fecha_cita = models.DateField(null=True)  # Permitir valores nulos
     hora_cita = models.TimeField(null=True)   # Permitir valores nulos
 
