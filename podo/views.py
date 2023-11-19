@@ -34,7 +34,7 @@ def agendar_cita(request):
             if not Cita.objects.filter(podologo=cita.podologo, fecha_cita=cita.fecha_cita, hora_cita=cita.hora_cita).exists():
                 cita.save()
                 messages.success(request, 'Cita agendada con éxito.')
-                return redirect('alguna_url')
+                return redirect('lista_citas')
             else:
                 messages.error(request, 'El podólogo seleccionado ya tiene una cita en ese horario.')
     else:
