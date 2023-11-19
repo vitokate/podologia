@@ -27,8 +27,8 @@ def agendar_cita(request):
             cita = form.save(commit=False)
             # Ajustar a la zona horaria de Chile
             hora_chilena = pytz.timezone('Chile/Continental')
-            cita.fecha_cita = cita.fecha_cita.astimezone(hora_chilena)
-            cita.hora_cita = cita.hora_cita.astimezone(hora_chilena)
+            # cita.fecha_cita es un objeto date, no necesita ajuste de zona horaria
+            # cita.hora_cita es un objeto time, no necesita ajuste de zona horaria
 
             # Verificar si ya existe una cita para ese podólogo en la fecha y hora especificadas
             if not Cita.objects.filter(podologo=cita.podologo, fecha_cita=cita.fecha_cita, hora_cita=cita.hora_cita).exists():
